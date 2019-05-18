@@ -6,3 +6,13 @@
 li.list-group-item {
     border: 0 none;
 }
+
+input, button {
+    background-color: #333333 !important;
+    color: #eeeeee !important;
+}
+
+.panel, li.list-group-item {
+    background-color: #2d2a2e !important;
+    color: #f3f3f3 !important;
+}
