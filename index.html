@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Chatroom</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="client.js"></script>
+    </head>
+    <body>
+        <!-- <div class="container"> -->
+        <!--     <1!-- Left-aligned --1> -->
+        <!--     <div class="media"> -->
+        <!--         <div class="media-left"> -->
+        <!--             <img src="img_avatar1.png" class="media-object" style="width:60px"> -->
+        <!--         </div> -->
+        <!--         <div class="media-body"> -->
+        <!--             <h4 class="media-heading">John Doe</h4> -->
+        <!--             <p>Lorem ipsum...</p> -->
+        <!--         </div> -->
+        <!--     </div> -->
+
+        <!--     <1!-- Right-aligned --1> -->
+        <!--     <div class="media"> -->
+        <!--         <div class="media-body"> -->
+        <!--             <h4 class="media-heading">John Doe</h4> -->
+        <!--             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p> -->
+        <!--         </div> -->
+        <!--         <div class="media-right"> -->
+        <!--             <img src="img_avatar1.png" class="media-object" style="width:60px"> -->
+        <!--         </div> -->
+        <!--     </div> -->
+        <!-- </div> -->
+        <div class="container">
+            <ul class="list-group" id="messages"></ul>
+            <!-- input message -->
+            <form action="">
+                <div class="form-group">
+                    <label for="input">Message:</label>
+                    <textarea class="form-control" rows="1" id="input"></textarea>
+                </div>
+                <span class="pull-right"><button type="submit" class="btn btn-primary">Send</button></span>
+            </form>
+        </div>
+    </body>
+</html>
+
