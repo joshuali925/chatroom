@@ -1,18 +1,22 @@
 .scrollable {
     overflow-y: auto;
-    height: 72vh;
+    height: 75vh;
 }
 
 li.list-group-item {
     border: 0 none;
 }
 
+body {
+    background-color: #11293b !important;
+}
+
 input, button {
-    background-color: #333333 !important;
-    color: #eeeeee !important;
+    background-color: #354e60 !important;
+    color: #abb4ba !important;
 }
 
 .panel, li.list-group-item {
-    background-color: #2d2a2e !important;
-    color: #f3f3f3 !important;
+    background-color: #203b4d !important;
+    color: #e1caa7 !important;
 }
