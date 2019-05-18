@@ -4,7 +4,7 @@ let http = require('http').Server(app);
 let io = require('socket.io')(http);
 let path = require('path');
 
-let sockets = [];
+let sockets = {};
 
 app.use(express.static(path.join(__dirname, 'client')));
 
@@ -13,12 +13,12 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket) {
-    let username;
+    let connected_user;
     socket.on("join", function (user) {
         sockets[user] = socket;
-        username = user;
-        io.emit("join", user); // notify clients
-        console.log(user + " connected.");
+        connected_user = user;
+        io.emit("notify", user, user + " entered the room.", Object.keys(sockets)); // notify clients
+        // console.log(user + " connected.");
     });
 
     socket.on("message", function (user, message) {
@@ -26,9 +26,9 @@ io.on('connection', function(socket) {
     });
 
     socket.on("disconnect", function() {
-        delete sockets[user];
-        io.emit("leave", username);
-        console.log(username + " left.");
+        delete sockets[connected_user];
+        io.emit("notify", connected_user, connected_user + " left the room.", Object.keys(sockets)); // notify clients
+        // console.log(connected_user + " disconnected.");
     });
 });
 
