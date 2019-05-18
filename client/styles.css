@@ -1,0 +1,8 @@
+.scrollable {
+    overflow-y: auto;
+    height: 72vh;
+}
+
+li.list-group-item {
+    border: 0 none;
+}

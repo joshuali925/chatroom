@@ -1,13 +1,13 @@
-let user = prompt("Your name: ");
-// let user = "1";
+// let user = prompt("Your name: ");
+let user = "apple";
 let socket = io();
-socket.emit("join", user); //notify server
+socket.emit("join", user); // notify server
 
 document.title += ': ' + user;
 
 
 socket.on("join", function (user) {
-    addLine(user + " entered the chatroom.");
+    $('#messages').append($('<li class="list-group-item">').text(user + " entered the chatroom."));
 });
 
 socket.on("message", function(user, message) {
@@ -15,14 +15,14 @@ socket.on("message", function(user, message) {
 });
 
 function addLine(text) {
-    $('#messages').append($('<li>').text(text));
+    $('#messages').append($('<li class="list-group-item">').text(text));
 }
 
 $(document).ready(function(){
-    $('form').submit(function () {
+    $("form").submit(function () {
         let message = $("#input").val();
         socket.emit("message", user, message);
-        $("#input").val("");
+        $("#input").val("").focus();
         return false;
     })
 });

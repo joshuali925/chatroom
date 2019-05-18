@@ -4,7 +4,7 @@ let http = require('http').Server(app);
 let io = require('socket.io')(http);
 let path = require('path');
 
-let sockets = []
+let sockets = [];
 
 app.use(express.static(path.join(__dirname, 'client')));
 
