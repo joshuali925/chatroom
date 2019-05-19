@@ -1,52 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Chat Room</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-        <script src="/socket.io/socket.io.js"></script>
-        <script src="client.js"></script>
-        <link rel="stylesheet" href="styles.css">
-    </head>
+<head>
+    <title>Chat Room</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="client.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
 
-    <body>
-        <div class="panel panel-default col-md-8 col-md-offset-2" style="margin-top: 4vh">
-<!--        <div class="panel panel-default col-md-12">-->
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Users Present</h3>
-                    </div>
-                    <div class="panel-body scrollable" id="user-list">
-                        <ul class="list-group" id="users"></ul>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Messages</h3>
-                    </div>
-                    <div class="panel-body scrollable" id="message-list">
-                        <ul class="list-group" id="messages"></ul>
-                    </div>
-                </div>
+<body>
+
+<div id="prompt" class="modal fade" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Enter your name</h4>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <form action="" class="panel-body fixed-bottom">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Message" name="input" id="input" autocomplete="off">
-                            <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-send"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+            <div class="modal-body">
+                <label>Your name:<input type="text" class="form-control" id="name-input"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary submit" data-dismiss="modal">Submit</button>
             </div>
         </div>
-    </body>
+    </div>
+</div>
+
+
+<div class="panel panel-default col-md-8 col-md-offset-2" style="margin-top: 4vh">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="panel-heading">
+                <h3 class="panel-title">Users Present</h3>
+            </div>
+            <div class="panel-body scrollable" id="user-list">
+                <ul class="list-group" id="users"></ul>
+            </div>
+        </div>
+        <div class="col-md-9">
+            <div class="panel-heading">
+                <h3 class="panel-title">Messages</h3>
+            </div>
+            <div class="panel-body scrollable" id="message-list">
+                <ul class="list-group" id="messages"></ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form action="" class="panel-body fixed-bottom">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Message" name="input" id="input"
+                           autocomplete="off">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-send"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
 </html>
 

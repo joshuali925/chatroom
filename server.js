@@ -15,8 +15,8 @@ app.get('/', function (req, res) {
 io.on('connection', function (socket) {
     let connected_user;
     socket.on("join", function (user) {
-        if (user in sockets) {
-            socket.emit("duplicate");
+        if (!user || user in sockets) {
+            socket.emit("invalid");
             return;
         }
         let now = getTime();
@@ -26,14 +26,18 @@ io.on('connection', function (socket) {
     });
 
     socket.on("message", function (user, message) {
-        let now = getTime();
-        io.emit("message", now + user, message);
+        if (user in sockets) {
+            let now = getTime();
+            io.emit("message", now + user, message);
+        }
     });
 
     socket.on("disconnect", function () {
-        let now = getTime();
-        delete sockets[connected_user];
-        io.emit("notify", now + connected_user + " left the room.", Object.keys(sockets)); // notify clients
+        if (connected_user) {
+            let now = getTime();
+            delete sockets[connected_user];
+            io.emit("notify", now + connected_user + " left the room.", Object.keys(sockets)); // notify clients
+        }
     });
 });
 
