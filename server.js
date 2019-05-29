@@ -5,12 +5,24 @@ let io = require('socket.io')(http);
 let path = require('path');
 
 let sockets = {};
+let args = process.argv.slice(2);
+let port = args.length > 0 ? parseInt(args[0]) : 8888;
+
+let history = [];
 
 app.use(express.static(path.join(__dirname, 'client')));
 
 app.get('/', function (req, res) {
     res.sendFile(__dirname + '/index.html');
 });
+
+http.listen(port, function () {
+    console.log('http://localhost:' + port);
+});
+
+function getTime() {
+    return "(" + new Date().toLocaleTimeString() + ") ";
+}
 
 io.on('connection', function (socket) {
     let connected_user;
@@ -19,32 +31,30 @@ io.on('connection', function (socket) {
             socket.emit("invalid");
             return;
         }
-        let now = getTime();
         sockets[user] = socket;
         connected_user = user;
-        io.emit("notify", now + user + " entered the room.", Object.keys(sockets)); // notify clients
+        history.forEach(h => socket.emit("message", h));
+        let display = getTime() + user + " entered the room.";
+        history.push(display);
+        console.log(display);
+        io.emit("message", display);
+        io.emit("updateList", Object.keys(sockets)); // notify clients
     });
 
     socket.on("message", function (user, message) {
-        if (user in sockets) {
-            let now = getTime();
-            io.emit("message", now + user, message);
-        }
+        let display = getTime() + user + ": " + message;
+        history.push(display);
+        console.log(display);
+        io.emit("message", display);
     });
 
     socket.on("disconnect", function () {
-        if (connected_user) {
-            let now = getTime();
-            delete sockets[connected_user];
-            io.emit("notify", now + connected_user + " left the room.", Object.keys(sockets)); // notify clients
-        }
+        if (!connected_user) return;
+        delete sockets[connected_user];
+        let display = getTime() + connected_user + " left the room.";
+        history.push(display);
+        console.log(display);
+        io.emit("message", display);
+        io.emit("updateList", Object.keys(sockets)); // notify clients
     });
 });
-
-http.listen(8888, function () {
-    console.log('http://localhost:8888');
-});
-
-function getTime() {
-    return "(" + new Date().toLocaleTimeString() + ") ";
-}

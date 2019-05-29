@@ -10,14 +10,14 @@ socket.on("invalid", function () {
 });
 
 
-socket.on("message", function (header, message) {
-    $('#messages').append($('<li class="list-group-item">').text(header + ": " + message));
+socket.on("message", function (display) {
+    if (!user) return;
+    $('#messages').append($('<li class="list-group-item">').text(display));
     $('#message-list').scrollTop(1E9);
 });
 
-socket.on("notify", function (message, userlist) {
-    $('#messages').append($('<li class="list-group-item">').text(message));
-    $('#message-list').scrollTop(1E9);
+socket.on("updateList", function (userlist) {
+    if (!user) return;
     $('#users').html(userlist.map(u => $('<li class="list-group-item">').text(u)));
 });
 
@@ -26,6 +26,7 @@ $(document).ready(function () {
         $('#name-input').focus();
     });
     $("form").submit(function () {
+        if (!user) return;
         let message = $("#input").val();
         socket.emit("message", user, message);
         $("#input").val("").focus();
@@ -46,7 +47,7 @@ function showModal(prompt) {
     $("#prompt").modal("show");
 }
 
-$(document).on("keypress", function(event) { // enter also submits modal
+$(document).on("keypress", function(event) { // enter also submits prompt
     if ($("#prompt").hasClass('in') && event.which === 13) {
         $('.submit').click();
     }
