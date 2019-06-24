@@ -12,7 +12,12 @@ socket.on("invalid", function () {
 
 socket.on("message", function (display) {
     if (!user) return;
-    $('#messages').append($('<li class="list-group-item">').text(display));
+    if (display.type === "notification") {
+        $('#messages').append($('<li class="list-group-item" id="notification">').text(display.text));
+    } else {
+        $('#messages').append($('<li class="list-group-item" id="header">').text(display.header));
+        $('#messages').append($('<li class="list-group-item" id="message">').text(display.text));
+    }
     $('#message-list').scrollTop(1E9);
 });
 
@@ -25,14 +30,14 @@ $(document).ready(function () {
     $("#prompt").on('shown.bs.modal', function () {
         $('#name-input').focus();
     });
-    $("form").submit(function () {
+    $("form").submit(function () { // send message
         if (!user) return;
         let message = $("#input").val();
         socket.emit("message", user, message);
         $("#input").val("").focus();
         return false;
     });
-    $('.submit').click(function () {
+    $('.submit').click(function () { // creates username
         user = $("#name-input").val().trim();
         socket.emit("join", user); // notify server
         $('.modal-backdrop').remove();
@@ -47,7 +52,7 @@ function showModal(prompt) {
     $("#prompt").modal("show");
 }
 
-$(document).on("keypress", function(event) { // enter also submits prompt
+$(document).on("keypress", function(event) { // enter also submits username prompt
     if ($("#prompt").hasClass('in') && event.which === 13) {
         $('.submit').click();
     }

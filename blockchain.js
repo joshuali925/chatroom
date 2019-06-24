@@ -22,8 +22,9 @@ class BlockChain {
         return this.chain[this.chain.length - 1];
     }
     
-    addBlock(newBlock) {
-        newBlock.previousHash = this.getLastBlock().calculateHash;
+    addBlock(timestamp, messages) {
+        let newBlock = new Block(timestamp, messages);
+        newBlock.previousHash = this.getLastBlock().hash;
         newBlock.hash = newBlock.calculateHash();
         this.chain.push(newBlock);
     }
@@ -38,3 +39,13 @@ class BlockChain {
         return true;
     }
 }
+
+module.exports.BlockChain = BlockChain;
+
+let inst = new BlockChain();
+
+inst.addBlock('', 'first');
+console.log(inst.chain);
+console.log(JSON.stringify(inst.chain));
+console.log(inst.isChainValid());
+

@@ -25,3 +25,11 @@ li.list-group-item,
     background-color: #203b4d !important;
     color: #c6dff1 !important;
 }
+
+#notification {
+    font-family: Arial, Sans-Serif;
+}
+
+#header {
+    font-family: Times, Sans-Serif;
+}

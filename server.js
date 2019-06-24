@@ -1,3 +1,5 @@
+const { BlockChain } = require('./blockchain');
+
 let express = require('express');
 let app = express();
 let http = require('http').Server(app);
@@ -9,6 +11,7 @@ let args = process.argv.slice(2);
 let port = args.length > 0 ? parseInt(args[0]) : 8888;
 
 let history = [];
+let chain = new BlockChain();
 
 // serve client js and css
 app.use(express.static(path.join(__dirname, 'client')));
@@ -35,24 +38,29 @@ io.on('connection', function (socket) {
         sockets[user] = socket;
         connected_user = user;
         history.forEach(h => socket.emit("message", h)); // sends history to the new user
-        emitMessage(getTime() + user + " entered the room.");
+        emitMessage(null, getTime() + user + " entered the room.");
         io.emit("updateList", Object.keys(sockets)); // sync userlist to all users
     });
 
     socket.on("message", function (user, message) { // the user sends a message
-        emitMessage(getTime() + user + ": " + message);
+        emitMessage(getTime() + user, message);
     });
 
     socket.on("disconnect", function () { // the user left
         if (!connected_user) return; // in case never created username
         delete sockets[connected_user];
-        emitMessage(getTime() + connected_user + " left the room.");
+        emitMessage(null, getTime() + connected_user + " left the room.");
         io.emit("updateList", Object.keys(sockets)); // sync userlist to all users
     });
 });
 
-function emitMessage(msg_to_display) {
-    history.push(msg_to_display);
-    console.log(msg_to_display);
-    io.emit("message", msg_to_display);
+function emitMessage(header, message) { // header = (time) username
+    let display = {};
+    display.type = header ? "message" : "notification";
+    display.header = header;
+    display.text = message;
+    history.push(display);
+    console.log(display);
+    io.emit("message", display);
+    chain.addBlock(new Date().getTime(), display);
 }
