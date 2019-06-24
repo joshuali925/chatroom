@@ -11,13 +11,16 @@ body {
     background-color: #11293b !important;
 }
 
-input, button {
+input,
+button {
     font-family: "Calibri", serif;
     background-color: #354e60 !important;
     color: #b5bec4 !important;
 }
 
-.panel, li.list-group-item, .modal-content{
+.panel,
+li.list-group-item,
+.modal-content {
     font-family: "Calibri", serif;
     background-color: #203b4d !important;
     color: #c6dff1 !important;

@@ -10,6 +10,7 @@ let port = args.length > 0 ? parseInt(args[0]) : 8888;
 
 let history = [];
 
+// serve client js and css
 app.use(express.static(path.join(__dirname, 'client')));
 
 app.get('/', function (req, res) {
@@ -26,35 +27,32 @@ function getTime() {
 
 io.on('connection', function (socket) {
     let connected_user;
-    socket.on("join", function (user) {
+    socket.on("join", function (user) { // a new username created
         if (!user || user in sockets) {
-            socket.emit("invalid");
+            socket.emit("invalid"); // invalid or duplicate name
             return;
         }
         sockets[user] = socket;
         connected_user = user;
-        history.forEach(h => socket.emit("message", h));
-        let display = getTime() + user + " entered the room.";
-        history.push(display);
-        console.log(display);
-        io.emit("message", display);
-        io.emit("updateList", Object.keys(sockets)); // notify clients
+        history.forEach(h => socket.emit("message", h)); // sends history to the new user
+        emitMessage(getTime() + user + " entered the room.");
+        io.emit("updateList", Object.keys(sockets)); // sync userlist to all users
     });
 
-    socket.on("message", function (user, message) {
-        let display = getTime() + user + ": " + message;
-        history.push(display);
-        console.log(display);
-        io.emit("message", display);
+    socket.on("message", function (user, message) { // the user sends a message
+        emitMessage(getTime() + user + ": " + message);
     });
 
-    socket.on("disconnect", function () {
-        if (!connected_user) return;
+    socket.on("disconnect", function () { // the user left
+        if (!connected_user) return; // in case never created username
         delete sockets[connected_user];
-        let display = getTime() + connected_user + " left the room.";
-        history.push(display);
-        console.log(display);
-        io.emit("message", display);
-        io.emit("updateList", Object.keys(sockets)); // notify clients
+        emitMessage(getTime() + connected_user + " left the room.");
+        io.emit("updateList", Object.keys(sockets)); // sync userlist to all users
     });
 });
+
+function emitMessage(msg_to_display) {
+    history.push(msg_to_display);
+    console.log(msg_to_display);
+    io.emit("message", msg_to_display);
+}
