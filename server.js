@@ -43,7 +43,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on("message", function (user, message) { // the user sends a message
-        emitMessage(getTime() + user, message);
+        emitMessage(getTime() + user + ': ', message);
     });
 
     socket.on("disconnect", function () { // the user left

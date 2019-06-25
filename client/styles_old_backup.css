@@ -10,13 +10,13 @@ li.list-group-item {
 /* background */
 body {
     font-family: "Calibri", serif;
-    background-color: #21242b !important;
+    background-color: #11293b !important;
 }
 
 /* input box and button background */
 input,
 button {
-    background-color: #282c35 !important;
+    background-color: #354e60 !important;
     color: #b5bec4 !important;
 }
 
@@ -24,25 +24,14 @@ button {
 .panel,
 li.list-group-item,
 .modal-content {
-    background-color: #282c35 !important;
-    color: #c8c0b6 !important;
+    background-color: #203b4d !important;
+    color: #c6dff1 !important;
 }
 
 #notification {
     font-style: italic;
-    color: #4f5567 !important;
 }
 
 #header {
-    /* font-style: italic; */
-    color: #e3ba75 !important;
-}
-
-#message {
-    color: #a2cc7c !important;
-}
-
-#userlist {
     font-style: italic;
-    color: #9dbf71 !important;
 }

@@ -15,15 +15,15 @@ socket.on("message", function (display) {
     if (display.type === "notification") {
         $('#messages').append($('<li class="list-group-item" id="notification">').text(display.text));
     } else {
-        $('#messages').append($('<li class="list-group-item" id="header">').text(display.header));
-        $('#messages').append($('<li class="list-group-item" id="message">').text(display.text));
+        $('#messages').append($('<li class="list-group-item" id="header">').text(display.header+display.text));
+        // $('#messages').append($('<li class="list-group-item" id="message">').text(display.text));
     }
     $('#message-list').scrollTop(1E9);
 });
 
 socket.on("updateList", function (userlist) {
     if (!user) return;
-    $('#users').html(userlist.map(u => $('<li class="list-group-item">').text(u)));
+    $('#users').html(userlist.map(u => $('<li class="list-group-item" id="userlist">').text(u)));
 });
 
 $(document).ready(function () {

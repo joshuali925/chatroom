@@ -15,7 +15,7 @@ class Block {
 
 class BlockChain {
     constructor() {
-        this.chain = [new Block("01/01/2001", "Genesis block", "0")];
+        this.chain = [new Block(0, "Genesis block", 0)];
     }
     
     getLastBlock() {
